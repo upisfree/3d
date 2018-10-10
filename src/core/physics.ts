@@ -17,12 +17,14 @@ export namespace Physics {
            a.position.y + a.size.height > b.position.y;
   }
 
-  export function checkPlayerAndWallsCollision(player: Player) {
-    for (let i = 0; i < Scene.children.length; ++i) {
+  export function checkWallCollision(body: Body) {
+    for (let i = 0; i < Scene.children.length; i++) {
       let a = Scene.children[i];
 
       if (a.constructor.name === ENITY_NAME.WALL) {
-        if (collision(player, a)) {
+        if (collision(body, a)) {
+          // console.log(body.size, a.size);
+
           return true;
         }
       }

@@ -10,15 +10,15 @@ export default class Player implements Physics.Body {
   public static instance: Player;
 
   public position: Vector2;
-  public rotation: number = 0;
-  public size: Vector2 = new Vector2(50, 50);
-  public moveSpeed: number = 10;
-  public rotateSpeed: number = Math.PI / 4;
+  public rotation: number = 0; // в радианах
+  public size: Vector2 = new Vector2(10, 10);
+  public moveSpeed: number = 7.5;
+  public rotateSpeed: number = Math.PI / 64;
 
   public camera: Camera = new Camera();
 
   public static minimap = {
-    size: new Vector2(10, 10),
+    size: new Vector2(2, 2),
     color: new Color(1, 0.5, 1)
   }
 
@@ -36,12 +36,12 @@ export default class Player implements Physics.Body {
     switch (d) {
       case DIRECTION.UP:
         v = new Vector2(
-          this.position.x + this.moveSpeed * Math.sin(this.rotation),
-          this.position.y - this.moveSpeed * Math.cos(this.rotation)
+          this.position.x + this.moveSpeed * Math.sin(this.rotation), // +
+          this.position.y - this.moveSpeed * Math.cos(this.rotation)  // -
         );
         p = this.getInstanceModifiedCopy(v);
 
-        if (!Physics.checkPlayerAndWallsCollision(p)) {
+        if (!Physics.checkWallCollision(p)) {
           this.position = v;
         }
 
@@ -66,7 +66,7 @@ export default class Player implements Physics.Body {
         );
         p = this.getInstanceModifiedCopy(v);
 
-        if (!Physics.checkPlayerAndWallsCollision(p)) {
+        if (!Physics.checkWallCollision(p)) {
           this.position = v;
         }
 
